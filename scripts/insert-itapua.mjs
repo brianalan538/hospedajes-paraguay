@@ -24,7 +24,7 @@ function loadEnv(path) {
 
 const env = loadEnv(join(ROOT, '.env.local'));
 const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY);
-const DEMO = ' (Ficha demo con info pública.)';
+const DEMO = '';
 
 const rows = [
   {
