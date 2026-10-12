@@ -16,6 +16,7 @@ export interface Lugar {
   slug: string;
   nombre: string;
   ciudad: string;
+  departamento: string;
   instagram: string | null;
   whatsapp: string | null;
   maps_url: string | null;
