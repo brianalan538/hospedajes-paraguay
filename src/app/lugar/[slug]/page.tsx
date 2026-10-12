@@ -1,37 +1,42 @@
 import { notFound } from 'next/navigation';
+import Galeria from '@/components/Galeria';
 import { getLugarPorSlug, waLink } from '@/lib/hospedajes';
 
 export default async function Ficha({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const lugar = await getLugarPorSlug(slug);
   if (!lugar) return notFound();
-  const fotos = [...(lugar.lugar_fotos || [])].sort((a, b) => a.orden - b.orden);
   return (
-    <main className="mx-auto max-w-3xl p-6">
-      <a href="/" className="text-sm underline">← Volver al directorio</a>
-      <h1 className="mt-2 text-3xl font-extrabold">{lugar.nombre}</h1>
-      <p className="text-zinc-600">{lugar.ciudad} {lugar.instagram ? `· Instagram @${lugar.instagram}` : ''}</p>
-      {!lugar.is_active && <p className="mt-2 rounded-xl bg-yellow-100 p-3 text-sm font-bold">🚧 DEMO oculta — solo visible con link directo hasta que el cliente pague.</p>}
-      <p className="mt-4">{lugar.descripcion}</p>
-      {lugar.precio_desde ? <p className="mt-2 font-bold">Desde Gs. {lugar.precio_desde.toLocaleString('es-PY')}</p> : null}
-      <div className="mt-4 grid gap-2">
-        {fotos.length === 0 && <p className="text-sm text-zinc-500">Sin fotos aún — sube a bucket hospedajes y registra en lugar_fotos.</p>}
-        {fotos.map((f) => (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img key={f.id} src={f.url} alt={lugar.nombre} className="w-full rounded-2xl" />
-        ))}
+    <main className="min-h-screen bg-stone-100">
+      <div className="mx-auto max-w-3xl p-4 sm:p-6">
+        <a href="/" className="text-sm font-bold text-emerald-800 underline">← Volver al directorio</a>
+        <div className="mt-2 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200 sm:p-6">
+          <h1 className="text-2xl font-extrabold leading-snug sm:text-3xl">{lugar.nombre}</h1>
+          <p className="mt-1 text-sm text-stone-600">
+            📍 {lugar.ciudad}
+            {lugar.instagram ? (
+              <> · <a className="font-bold text-pink-700 underline" href={`https://instagram.com/${lugar.instagram}`}>Instagram @{lugar.instagram}</a></>
+            ) : null}
+          </p>
+          {!lugar.is_active && <p className="mt-3 rounded-xl bg-yellow-100 p-3 text-sm font-bold">🚧 DEMO oculta — solo visible con link directo hasta que el cliente pague.</p>}
+          <p className="mt-3 text-stone-700">{lugar.descripcion}</p>
+          {lugar.precio_desde ? <p className="mt-2 font-extrabold">Desde Gs. {lugar.precio_desde.toLocaleString('es-PY')}</p> : null}
+          <div className="mt-4">
+            <Galeria fotos={lugar.lugar_fotos || []} nombre={lugar.nombre} />
+          </div>
+          <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+            <a className="rounded-xl bg-green-600 px-5 py-3 text-center font-extrabold text-white" href={waLink(lugar.whatsapp, `Hola! Quiero reservar en ${lugar.nombre}`)}>
+              Reservar por WhatsApp
+            </a>
+            {lugar.maps_url && (
+              <a className="rounded-xl bg-white px-5 py-3 text-center font-extrabold ring-1 ring-stone-300" href={lugar.maps_url}>
+                Cómo llegar
+              </a>
+            )}
+          </div>
+        </div>
+        <p className="mt-4 text-center text-xs text-stone-500">QR puerta → apunta a esta URL: /lugar/{lugar.slug}</p>
       </div>
-      <div className="mt-6 flex gap-2">
-        <a className="rounded-xl bg-green-600 px-5 py-3 text-white font-bold" href={waLink(lugar.whatsapp, `Hola! Quiero reservar en ${lugar.nombre}`)}>
-          Reservar por WhatsApp
-        </a>
-        {lugar.maps_url && (
-          <a className="rounded-xl border px-5 py-3 font-bold" href={lugar.maps_url}>
-            Cómo llegar
-          </a>
-        )}
-      </div>
-      <p className="mt-6 text-xs text-zinc-500">QR puerta → apunta a esta URL: /lugar/{lugar.slug}</p>
     </main>
   );
 }
