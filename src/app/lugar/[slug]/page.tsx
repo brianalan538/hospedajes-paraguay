@@ -35,8 +35,32 @@ export default async function Ficha({ params }: { params: Promise<{ slug: string
   const { slug } = await params;
   const lugar = await getLugarPorSlug(slug);
   if (!lugar) return notFound();
+  const fotos = [...(lugar.lugar_fotos || [])].sort((a, b) => a.orden - b.orden);
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'LodgingBusiness',
+    name: lugar.nombre,
+    description: lugar.descripcion,
+    url: `https://hospedajes-paraguay.vercel.app/lugar/${lugar.slug}`,
+    image: fotos.map((f) => f.url),
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: lugar.ciudad,
+      addressRegion: lugar.departamento,
+      addressCountry: 'PY',
+    },
+    ...(lugar.whatsapp ? { telephone: `+${lugar.whatsapp.replace(/\D/g, '')}` } : {}),
+    ...(lugar.instagram ? { sameAs: [`https://instagram.com/${lugar.instagram}`] } : {}),
+    ...(lugar.precio_desde
+      ? { priceRange: `Gs. ${lugar.precio_desde.toLocaleString('es-PY')}` }
+      : {}),
+  };
   return (
     <main className="min-h-screen bg-stone-100">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="mx-auto max-w-3xl p-4 sm:p-6">
         <a href="/" className="text-sm font-bold text-emerald-800 underline">← Volver al directorio</a>
         <div className="mt-2 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200 sm:p-6">
