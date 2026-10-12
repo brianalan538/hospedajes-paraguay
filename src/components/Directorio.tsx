@@ -88,22 +88,26 @@ export default function Directorio({ lugares }: { lugares: Lugar[] }) {
         {filtrados.map((l) => {
           const foto = preview(l);
           return (
-            <article key={l.id} className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-stone-200">
+            <article key={l.id} className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-stone-200 transition hover:shadow-md">
               <div className="flex flex-col sm:flex-row">
                 <div className="relative sm:w-64 sm:shrink-0">
-                  {foto ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={foto} alt={l.nombre} className="h-48 w-full object-cover sm:h-full sm:min-h-52" />
-                  ) : (
-                    <div className="flex h-48 items-center justify-center bg-stone-200 text-sm font-bold text-stone-500 sm:h-full">Sin foto</div>
-                  )}
+                  <Link href={`/lugar/${l.slug}`} title={`Ver fotos de ${l.nombre}`}>
+                    {foto ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={foto} alt={l.nombre} className="h-48 w-full object-cover sm:h-full sm:min-h-52" />
+                    ) : (
+                      <div className="flex h-48 items-center justify-center bg-stone-200 text-sm font-bold text-stone-500 sm:h-full">Sin foto</div>
+                    )}
+                  </Link>
                   {l.is_destacado && (
                     <span className="absolute left-2 top-2 rounded-full bg-amber-400 px-2 py-1 text-xs font-extrabold text-stone-900">⭐ Destacado</span>
                   )}
                 </div>
                 <div className="flex flex-1 flex-col p-4">
                   <div className="flex items-start justify-between gap-2">
-                    <h2 className="text-lg font-extrabold leading-snug text-stone-900">{l.nombre}</h2>
+                    <Link href={`/lugar/${l.slug}`} title={`Ver fotos de ${l.nombre}`} className="hover:underline">
+                      <h2 className="text-lg font-extrabold leading-snug text-stone-900">{l.nombre} 📷</h2>
+                    </Link>
                     {!l.is_active && (
                       <span className="shrink-0 rounded-full bg-yellow-100 px-2 py-1 text-xs font-bold text-stone-800">🚧 demo</span>
                     )}
@@ -124,9 +128,6 @@ export default function Directorio({ lugares }: { lugares: Lugar[] }) {
                     <p className="mt-1 text-sm font-extrabold text-emerald-800">💰 Desde Gs. {l.precio_desde.toLocaleString('es-PY')}</p>
                   ) : null}
                   <div className="mt-3 flex flex-wrap gap-2">
-                    <Link className="rounded-xl bg-stone-900 px-4 py-2 text-sm font-bold text-white" href={`/lugar/${l.slug}`}>
-                      📷 Ver fotos
-                    </Link>
                     <a className="rounded-xl bg-green-600 px-4 py-2 text-sm font-bold text-white" href={waLink(l.whatsapp, `Hola! Vi ${l.nombre} en Hospedajes Paraguay y quiero reservar`)}>
                       💬 Reservar
                     </a>

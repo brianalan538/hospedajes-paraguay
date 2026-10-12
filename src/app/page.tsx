@@ -66,24 +66,33 @@ export default async function Home() {
             const fotos = [...(l.lugar_fotos || [])].sort((a, b) => a.orden - b.orden);
             const foto = fotos[0]?.url ?? null;
             return (
-              <article key={l.id} className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-stone-200">
-                {foto ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={foto} alt={l.nombre} className="h-44 w-full object-cover" />
-                ) : (
-                  <div className="flex h-44 items-center justify-center bg-stone-200 text-sm font-bold text-stone-500">Sin foto</div>
-                )}
+              <article key={l.id} className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-stone-200 transition hover:shadow-md">
+                <Link href={`/lugar/${l.slug}`} className="block" title={`Ver fotos de ${l.nombre}`}>
+                  {foto ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={foto} alt={l.nombre} className="h-44 w-full object-cover" />
+                  ) : (
+                    <div className="flex h-44 items-center justify-center bg-stone-200 text-sm font-bold text-stone-500">Sin foto</div>
+                  )}
+                </Link>
                 <div className="p-4">
-                  <h3 className="font-extrabold leading-snug text-stone-900">{l.nombre}</h3>
+                  <Link href={`/lugar/${l.slug}`} className="hover:underline" title={`Ver fotos de ${l.nombre}`}>
+                    <h3 className="font-extrabold leading-snug text-stone-900">{l.nombre} 📷</h3>
+                  </Link>
                   <p className="mt-1 text-sm font-semibold text-stone-700">📍 {l.ciudad}</p>
                   <div className="mt-3 flex gap-2">
-                    <Link href={`/lugar/${l.slug}`} className="flex-1 rounded-xl bg-stone-900 px-3 py-2 text-center text-sm font-bold text-white">
-                      📷 Ver
-                    </Link>
                     <a href={waLink(l.whatsapp, `Hola! Vi ${l.nombre} en Hospedajes Paraguay y quiero reservar`)} className="flex-1 rounded-xl bg-green-600 px-3 py-2 text-center text-sm font-bold text-white">
                       💬 Reservar
                     </a>
+                    {l.maps_url && (
+                      <a href={l.maps_url} className="flex-1 rounded-xl bg-white px-3 py-2 text-center text-sm font-bold text-stone-900 ring-1 ring-stone-400">
+                        📍 Cómo llegar
+                      </a>
+                    )}
                   </div>
+                  <Link href={`/lugar/${l.slug}`} className="mt-2 block text-center text-xs font-bold text-stone-500 underline">
+                    Toca la foto o el nombre para ver todas las fotos →
+                  </Link>
                 </div>
               </article>
             );
