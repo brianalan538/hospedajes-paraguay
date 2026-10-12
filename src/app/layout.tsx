@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import Header from "@/components/Header";
 import "./globals.css";
 
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <footer className="mt-10 bg-white py-6 text-center text-xs font-semibold text-stone-500 ring-1 ring-stone-200">
           Hospedajes Paraguay · Hecho con 🧉 en Paraguay · Reserva directa por WhatsApp
         </footer>
+        <Analytics />
       </body>
     </html>
   );
