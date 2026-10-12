@@ -27,6 +27,18 @@ export interface Lugar {
   lugar_fotos: LugarFoto[];
 }
 
+// Orden lindo: primero con fotos (más fotos primero), luego destacados, luego nombre.
+function ordenarLindo(lista: Lugar[]): Lugar[] {
+  return [...lista].sort((a, b) => {
+    const fa = a.lugar_fotos?.length ?? 0;
+    const fb = b.lugar_fotos?.length ?? 0;
+    if ((fb > 0 ? 1 : 0) !== (fa > 0 ? 1 : 0)) return (fb > 0 ? 1 : 0) - (fa > 0 ? 1 : 0);
+    if (fb !== fa) return fb - fa;
+    if (Number(b.is_destacado) !== Number(a.is_destacado)) return Number(b.is_destacado) - Number(a.is_destacado);
+    return a.nombre.localeCompare(b.nombre);
+  });
+}
+
 export async function getTodosLugares(): Promise<Lugar[]> {
   const { data, error } = await supabase
     .from('lugares')
@@ -36,7 +48,7 @@ export async function getTodosLugares(): Promise<Lugar[]> {
     console.error('Error lugares:', error);
     return [];
   }
-  return (data || []) as Lugar[];
+  return ordenarLindo((data || []) as Lugar[]);
 }
 
 export async function getLugaresActivos(): Promise<Lugar[]> {
@@ -46,7 +58,7 @@ export async function getLugaresActivos(): Promise<Lugar[]> {
     .eq('is_active', true)
     .order('is_destacado', { ascending: false });
   if (error) return [];
-  return (data || []) as Lugar[];
+  return ordenarLindo((data || []) as Lugar[]);
 }
 
 export async function getLugarPorSlug(slug: string): Promise<Lugar | null> {
