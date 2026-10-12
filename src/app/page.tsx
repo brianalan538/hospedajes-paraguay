@@ -48,10 +48,13 @@ export default async function Home() {
 
         {/* Para negocios */}
         <section className="mt-4 rounded-2xl bg-stone-900 p-6 text-white">
-          <h2 className="text-2xl font-extrabold">🏨 ¿Tienes un hospedaje?</h2>
+          <h2 className="text-2xl font-extrabold text-white">🏨 ¿Tienes un hospedaje?</h2>
           <p className="mt-2 text-white/90">
-            Aparece en el directorio con fotos, botón de reserva a tu WhatsApp, cómo llegar y QR inteligente en tu puerta
-            que abre tu ficha. Sin comisiones por reserva: pagas fijo por estar visible.
+            Aparece en el directorio con fotos, botón de reserva directo a tu WhatsApp y cómo llegar.
+            Sin comisiones por reserva: te quedas con el 100% de lo que vendas. Solo pagas una membresía fija por estar visible.
+          </p>
+          <p className="mt-2 text-sm font-bold text-white/70">
+            Viajero: reservar por acá no te cuesta nada extra. El precio lo pone el hospedaje.
           </p>
           <a
             className="mt-4 inline-block rounded-xl bg-green-500 px-5 py-3 font-extrabold text-white"

@@ -35,7 +35,6 @@ export default async function Ficha({ params }: { params: Promise<{ slug: string
             )}
           </div>
         </div>
-        <p className="mt-4 text-center text-xs text-stone-500">QR puerta → apunta a esta URL: /lugar/{lugar.slug}</p>
       </div>
     </main>
   );
