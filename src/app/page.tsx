@@ -81,9 +81,11 @@ export default async function Home() {
                   </Link>
                   <p className="mt-1 text-sm font-semibold text-stone-700">📍 {l.ciudad}</p>
                   <div className="mt-3 flex gap-2">
-                    <a href={waLink(l.whatsapp, `Hola! Vi ${l.nombre} en Hospedajes Paraguay y quiero reservar`)} className="flex-1 rounded-xl bg-green-600 px-3 py-2 text-center text-sm font-bold text-white">
-                      💬 Reservar
-                    </a>
+                    {l.whatsapp && (
+                      <a href={waLink(l.whatsapp, `Hola! Vi ${l.nombre} en Hospedajes Paraguay y quiero reservar`)} className="flex-1 rounded-xl bg-green-600 px-3 py-2 text-center text-sm font-bold text-white">
+                        💬 Reservar
+                      </a>
+                    )}
                     {l.maps_url && (
                       <a href={l.maps_url} className="flex-1 rounded-xl bg-white px-3 py-2 text-center text-sm font-bold text-stone-900 ring-1 ring-stone-400">
                         📍 Cómo llegar

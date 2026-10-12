@@ -128,9 +128,11 @@ export default function Directorio({ lugares }: { lugares: Lugar[] }) {
                     <p className="mt-1 text-sm font-extrabold text-emerald-800">💰 Desde Gs. {l.precio_desde.toLocaleString('es-PY')}</p>
                   ) : null}
                   <div className="mt-3 flex flex-wrap gap-2">
-                    <a className="rounded-xl bg-green-600 px-4 py-2 text-sm font-bold text-white" href={waLink(l.whatsapp, `Hola! Vi ${l.nombre} en Hospedajes Paraguay y quiero reservar`)}>
-                      💬 Reservar
-                    </a>
+                    {l.whatsapp && (
+                      <a className="rounded-xl bg-green-600 px-4 py-2 text-sm font-bold text-white" href={waLink(l.whatsapp, `Hola! Vi ${l.nombre} en Hospedajes Paraguay y quiero reservar`)}>
+                        💬 Reservar
+                      </a>
+                    )}
                     {l.maps_url && (
                       <a className="rounded-xl bg-white px-4 py-2 text-sm font-bold text-stone-900 ring-1 ring-stone-400" href={l.maps_url}>
                         📍 Cómo llegar

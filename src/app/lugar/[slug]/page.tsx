@@ -25,9 +25,11 @@ export default async function Ficha({ params }: { params: Promise<{ slug: string
             <Galeria fotos={lugar.lugar_fotos || []} nombre={lugar.nombre} />
           </div>
           <div className="mt-6 flex flex-col gap-2 sm:flex-row">
-            <a className="rounded-xl bg-green-600 px-5 py-3 text-center font-extrabold text-white" href={waLink(lugar.whatsapp, `Hola! Quiero reservar en ${lugar.nombre}`)}>
-              💬 Reservar por WhatsApp
-            </a>
+            {lugar.whatsapp && (
+              <a className="rounded-xl bg-green-600 px-5 py-3 text-center font-extrabold text-white" href={waLink(lugar.whatsapp, `Hola! Quiero reservar en ${lugar.nombre}`)}>
+                💬 Reservar por WhatsApp
+              </a>
+            )}
             {lugar.maps_url && (
               <a className="rounded-xl bg-white px-5 py-3 text-center font-extrabold text-stone-900 ring-1 ring-stone-400" href={lugar.maps_url}>
                 📍 Cómo llegar
