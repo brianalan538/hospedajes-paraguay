@@ -15,8 +15,34 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hospedajes Paraguay 🇵🇾",
-  description: "Directorio de hospedajes, hoteles y cabañas en Paraguay. Reservá por WhatsApp.",
+  metadataBase: new URL('https://hospedajes-paraguay.vercel.app'),
+  title: {
+    default: 'Hospedajes Paraguay 🇵🇾',
+    template: '%s | Hospedajes Paraguay',
+  },
+  description: 'Directorio de hospedajes, hoteles y cabañas en Paraguay. Reservá por WhatsApp.',
+  openGraph: {
+    type: 'website',
+    locale: 'es_PY',
+    url: '/',
+    siteName: 'Hospedajes Paraguay',
+    title: 'Hospedajes Paraguay 🇵🇾',
+    description: 'Hoteles, spas y cabañas con reserva directa por WhatsApp. Sin comisiones, fotos reales y ubicación verificada.',
+    images: [
+      {
+        url: '/fondo.jpg',
+        width: 1280,
+        height: 848,
+        alt: 'Turismo en Paraguay — Hospedajes Paraguay',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Hospedajes Paraguay 🇵🇾',
+    description: 'Hoteles, spas y cabañas con reserva directa por WhatsApp. Sin comisiones.',
+    images: ['/fondo.jpg'],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

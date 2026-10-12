@@ -1,6 +1,35 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Galeria from '@/components/Galeria';
 import { getLugarPorSlug, waLink } from '@/lib/hospedajes';
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const lugar = await getLugarPorSlug(slug);
+  if (!lugar) return {};
+  const fotos = [...(lugar.lugar_fotos || [])].sort((a, b) => a.orden - b.orden);
+  const img = fotos[0]?.url ?? '/fondo.jpg';
+  const title = `${lugar.nombre} 📍 ${lugar.ciudad}`;
+  const description = `${lugar.descripcion.slice(0, 150)} Reserva directa por WhatsApp, sin comisiones.`;
+  return {
+    title,
+    description,
+    openGraph: {
+      type: 'article',
+      url: `/lugar/${lugar.slug}`,
+      siteName: 'Hospedajes Paraguay',
+      title,
+      description,
+      images: [{ url: img, alt: lugar.nombre }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [img],
+    },
+  };
+}
 
 export default async function Ficha({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
