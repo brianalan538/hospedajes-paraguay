@@ -47,7 +47,6 @@ export default async function Ficha({ params }: { params: Promise<{ slug: string
               <> · <a className="font-bold text-pink-700 underline" href={`https://instagram.com/${lugar.instagram}`}>📸 Instagram @{lugar.instagram}</a></>
             ) : null}
           </p>
-          {!lugar.is_active && <p className="mt-3 rounded-xl bg-yellow-100 p-3 text-sm font-bold">🚧 DEMO oculta — solo visible con link directo hasta que el cliente pague.</p>}
           <p className="mt-3 text-stone-700">{lugar.descripcion}</p>
           {lugar.precio_desde ? <p className="mt-2 font-extrabold">Desde Gs. {lugar.precio_desde.toLocaleString('es-PY')}</p> : null}
           <div className="mt-4">

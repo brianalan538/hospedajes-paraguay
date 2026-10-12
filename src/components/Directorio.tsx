@@ -108,9 +108,6 @@ export default function Directorio({ lugares }: { lugares: Lugar[] }) {
                     <Link href={`/lugar/${l.slug}`} title={`Ver fotos de ${l.nombre}`} className="hover:underline">
                       <h2 className="text-lg font-extrabold leading-snug text-stone-900">{l.nombre} 📷</h2>
                     </Link>
-                    {!l.is_active && (
-                      <span className="shrink-0 rounded-full bg-yellow-100 px-2 py-1 text-xs font-bold text-stone-800">🚧 demo</span>
-                    )}
                   </div>
                   <p className="mt-1 text-sm font-semibold text-stone-700">
                     📍 {l.ciudad} · 🗺️ {l.departamento}
