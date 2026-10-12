@@ -7,8 +7,8 @@ const OWNER_WA =
 
 export default async function Home() {
   const lugares = await getTodosLugares();
-  // Ya vienen ordenados lindo (con fotos primero) desde lib
-  const destacados = lugares.slice(0, 3);
+  // Destacados = los marcados con ⭐ en DB (los que pagan/eliges), en orden lindo
+  const destacados = lugares.filter((l) => l.is_destacado);
 
   return (
     <main className="min-h-screen">
