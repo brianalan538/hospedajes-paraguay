@@ -28,6 +28,7 @@ export interface Lugar {
 }
 
 export const DESTACADO_PRINCIPAL = 'hospedaje-panambi-carmen';
+export const OWNER_WHATSAPP = '595985798538';
 
 // Orden lindo: principal, luego con fotos (más fotos primero), luego destacados, luego nombre.
 function ordenarLindo(lista: Lugar[]): Lugar[] {

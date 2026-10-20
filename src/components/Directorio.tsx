@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import type { Lugar } from '@/lib/hospedajes';
-import { waLink, DESTACADO_PRINCIPAL } from '@/lib/hospedajes';
+import { waLink, DESTACADO_PRINCIPAL, OWNER_WHATSAPP } from '@/lib/hospedajes';
 
 function preview(lugar: Lugar) {
   const fotos = [...(lugar.lugar_fotos || [])].sort((a, b) => a.orden - b.orden);
@@ -36,6 +36,12 @@ export default function Directorio({ lugares }: { lugares: Lugar[] }) {
       return true;
     });
   }, [lugares, q, depto, ciudad]);
+
+  const destino = q.trim() || ciudad || depto;
+  const consultaCiudad = destino
+    ? `Hola! Busco hospedaje en ${destino} y no lo encontré en Hospedajes Paraguay.`
+    : 'Hola! Busco hospedaje en una ciudad que no está en Hospedajes Paraguay.';
+  const waCiudad = waLink(OWNER_WHATSAPP, consultaCiudad);
 
   return (
     <div>
@@ -78,6 +84,13 @@ export default function Directorio({ lugares }: { lugares: Lugar[] }) {
             ✖ Limpiar filtros
           </button>
         )}
+        <p className="mt-3 border-t border-stone-200 pt-3 text-sm font-semibold text-stone-700">
+          ¿No está tu ciudad?{' '}
+          <a href={waCiudad} className="font-extrabold text-emerald-800 underline">
+            Escribinos
+          </a>{' '}
+          y la sumamos al directorio.
+        </p>
       </div>
 
       <p className="mb-3 mt-4 text-sm font-bold text-stone-600">
@@ -149,6 +162,9 @@ export default function Directorio({ lugares }: { lugares: Lugar[] }) {
         <div className="rounded-2xl bg-white p-10 text-center ring-1 ring-stone-200">
           <p className="font-bold text-stone-700">😕 No encontramos hospedajes con esos filtros.</p>
           <p className="mt-1 text-sm text-stone-500">Probá con otra búsqueda o limpiá los filtros.</p>
+          <a href={waCiudad} className="mt-4 inline-block rounded-xl bg-green-600 px-5 py-2.5 font-extrabold text-white">
+            ¿No está tu ciudad? Escribinos
+          </a>
         </div>
       )}
     </div>
