@@ -27,9 +27,14 @@ export interface Lugar {
   lugar_fotos: LugarFoto[];
 }
 
-// Orden lindo: primero con fotos (más fotos primero), luego destacados, luego nombre.
+export const DESTACADO_PRINCIPAL = 'hospedaje-panambi-carmen';
+
+// Orden lindo: principal, luego con fotos (más fotos primero), luego destacados, luego nombre.
 function ordenarLindo(lista: Lugar[]): Lugar[] {
   return [...lista].sort((a, b) => {
+    const pa = a.is_destacado && a.slug === DESTACADO_PRINCIPAL;
+    const pb = b.is_destacado && b.slug === DESTACADO_PRINCIPAL;
+    if (pa !== pb) return pa ? -1 : 1;
     const fa = a.lugar_fotos?.length ?? 0;
     const fb = b.lugar_fotos?.length ?? 0;
     if ((fb > 0 ? 1 : 0) !== (fa > 0 ? 1 : 0)) return (fb > 0 ? 1 : 0) - (fa > 0 ? 1 : 0);

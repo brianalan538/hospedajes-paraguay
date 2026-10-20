@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Galeria from '@/components/Galeria';
 import { getLugarPorSlug, waLink } from '@/lib/hospedajes';
@@ -62,7 +63,7 @@ export default async function Ficha({ params }: { params: Promise<{ slug: string
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="mx-auto max-w-3xl p-4 sm:p-6">
-        <a href="/" className="text-sm font-bold text-emerald-800 underline">← Volver al directorio</a>
+        <Link href="/" className="text-sm font-bold text-emerald-800 underline">← Volver al directorio</Link>
         <div className="mt-2 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200 sm:p-6">
           <h1 className="text-2xl font-extrabold leading-snug text-stone-900 sm:text-3xl">{lugar.nombre}</h1>
           <p className="mt-1 text-sm font-semibold text-stone-700">

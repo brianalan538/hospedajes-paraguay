@@ -37,7 +37,7 @@ const lugar = {
     'Escapada en Carmen del Paraná, cerca de la costanera y las playas. Habitaciones amobladas con aire acondicionado y Wi-Fi, piscina para relajarse, quincho con parrilla y estacionamiento amplio y seguro. Ideal para familias y grupos. Calificación 5/5.',
   precio_desde: null,
   is_active: false,
-  is_destacado: false,
+  is_destacado: true,
 };
 
 const { error } = await supabase.from('lugares').upsert(lugar, { onConflict: 'slug' });

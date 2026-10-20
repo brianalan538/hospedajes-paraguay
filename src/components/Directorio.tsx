@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import type { Lugar } from '@/lib/hospedajes';
-import { waLink } from '@/lib/hospedajes';
+import { waLink, DESTACADO_PRINCIPAL } from '@/lib/hospedajes';
 
 function preview(lugar: Lugar) {
   const fotos = [...(lugar.lugar_fotos || [])].sort((a, b) => a.orden - b.orden);
@@ -100,7 +100,9 @@ export default function Directorio({ lugares }: { lugares: Lugar[] }) {
                     )}
                   </Link>
                   {l.is_destacado && (
-                    <span className="absolute left-2 top-2 rounded-full bg-amber-400 px-2 py-1 text-xs font-extrabold text-stone-900">⭐ Destacado</span>
+                    <span className="absolute left-2 top-2 rounded-full bg-amber-400 px-2 py-1 text-xs font-extrabold text-stone-900">
+                      {l.slug === DESTACADO_PRINCIPAL ? '⭐ Principal' : '⭐ Destacado'}
+                    </span>
                   )}
                 </div>
                 <div className="flex flex-1 flex-col p-4">
